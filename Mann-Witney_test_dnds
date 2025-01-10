@@ -1,0 +1,19 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+from scipy.stats import mannwhitneyu
+
+# Cargar datos
+df = pd.read_excel("datos_dnds_cleaned.xlsx", sheet_name="Sheet1")
+
+# Filtrado por estado
+concordant = df[df['Status'] == 'concord']['dN_dS']
+discordant = df[df['Status'] == 'discord']['dN_dS']
+
+# Estadísticas descriptivas
+desc_concord = concordant.describe()
+desc_discord = discordant.describe()
+
+# Prueba estadística: Mann-Whitney U
+stat, p_value = mannwhitneyu(concordant, discordant)
+print(f"Mann-Whitney U: {stat}, P-value: {p_value}") 
